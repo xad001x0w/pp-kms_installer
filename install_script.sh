@@ -63,7 +63,7 @@ Installpp()
 {
 	# Download and install Pi Presents
 	mkdir /home/pi/pipresents
-	wget -P /home/pi/ https://github.com/KenT2/pipresents-kms/tarball/master -O - | tar xz -C /home/pi/pipresents
+	wget -P /home/pi/ https://github.com/KenT2/pipresents-kms/tarball/master -O - | tar --overwrite -xz -C /home/pi/pipresents
 	chown pi:pi -R /home/pi/pipresents
 }
 
@@ -87,7 +87,12 @@ Setautostart()
 
 	echo "Inserting autostart line..."
 	grep -qxF "/usr/bin/python3 /home/pi/pipresents/pp_manager.py" /home/pi/.config/lxsession/LXDE-pi/autostart || echo "/usr/bin/python3 /home/pi/pipresents/pp_manager.py" >> /home/pi/.config/lxsession/LXDE-pi/autostart
+
+	echo "Patching pp_manager.py to wait 10 seconds before starting..."
+	#edit pp_manager.py to wait 10 seconds for network to come up after starting (prevents failed launch)
+	sed -i '/*.start(PPManager,address=self.ip.*/i sleep(10)/' /home/pi/pipresents/pp_manager.py
 	echo "...done!"
+
 }
 
 Sethostname()
@@ -97,6 +102,7 @@ Sethostname()
 	echo Enter new hostname:
 	read new_hostname
 	raspi-config nonint do_hostname $new_hostname
+	#edit pp_web.cfg to update hostname
 }
 
 Enablessh()
