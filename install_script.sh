@@ -75,6 +75,17 @@ Installexmp()
 	chown pi:pi -R /home/pi/pp_home
 }
 
+Setautostart()
+{
+	if [ ! -f /home/pi/.config/lxsession/LXDE-pi/autostart ] then
+    	echo "Copying default autostart file..."
+    	cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/autostart
+	fi
+	echo "Inserting autostart line..."
+	grep -qxF "/usr/bin/python3 /home/pi/pipresents" /home/pi/.config/lxsession/LXDE-pi/autostart || echo "/usr/bin/python3 /home/pi/pipresents" >> /home/pi/.config/lxsession/LXDE-pi/autostart
+	echo "...done!"
+}
+
 Sethostname()
 {
 	curhost=$(hostname)
@@ -119,7 +130,7 @@ Updateshares()
 		echo "Config file already modified. Skipping!"
 	else
 		sed -i '1 i #JEG' $config;
-		#cp --backup=t $config /etc/samba/smb.conf.bak
+		cp --backup=t $config /etc/samba/smb.conf.bak
 		sed -i -e '169,236d' $config;
 		echo "[Pi Presents]" >> $config
 		echo "comment = Pi Presents root directory" >> $config
@@ -270,6 +281,26 @@ else
 	else
 		echo
 		echo "Skipping downloading and installing Pi Presents KMS Examples!"
+		echo
+	fi
+fi
+
+# Set PP Manager to autostart
+if [[ $doall = true ]]; then
+	echo
+	echo "Setting PP Manager to autostart..."
+	Setautostart
+else
+	echo
+	read -p "Set PP Manager to autostart on logon? (yes/no) " -n 1 -r
+	
+	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		echo
+		echo "Setting PP Manager to autostart..."
+		Setautostart
+	else
+		echo
+		echo "Skip setting PP Manager autostart!"
 		echo
 	fi
 fi
