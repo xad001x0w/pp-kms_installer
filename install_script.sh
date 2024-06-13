@@ -321,10 +321,12 @@ if [[ $doall = true ]]; then
 else
 	echo
 	status=$(raspi-config nonint get_vnc)
-	if [[ $status = 0 ]]; then
-		string=$"enabled"
+	if [[ $status = "0" ]]; then
+		echo $status
+		string=$"enabled!"
 	else
-		string=$"disabled"
+		echo $status
+		string=$"disabled!"
 	fi
 	printf "VNC is currently %s\n" "$string"
 	read -p "Enable VNC access? (yes/no) " -n 1 -r
