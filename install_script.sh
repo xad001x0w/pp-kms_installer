@@ -19,7 +19,7 @@ echo "  -a    Full auto silent install, carries out all actions"
 echo "  -h    Displays this help text"
 echo "  -v    Shows version info"
 echo
-echo "Written by James Ball, 12/06/24"
+echo "Written by James Ball, 13/06/24"
 echo
 }
 
@@ -27,9 +27,9 @@ Version()
 {
 echo
 echo "Pi Presents KMS install script"
-echo "Version 1.0"
+echo "Version 1.1"
 echo
-echo "Written by James Ball, 12th June 2024"
+echo "Written by James Ball, 13th June 2024"
 echo
 }
 
@@ -367,7 +367,7 @@ else
 		string=$"disabled!"
 	fi
 	printf "Screen blanking is currently %s\n" "$string"
-	read -p "Disble screen blanking? (yes/no) " -n 1 -r
+	read -p "Disable screen blanking? (yes/no) " -n 1 -r
 	
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		echo
