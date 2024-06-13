@@ -81,7 +81,8 @@ Setautostart()
 
     	echo "Copying default autostart file..."
     	cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/autostart
-	
+		chown pi:pi /home/pi/.config/lxsession/LXDE-pi/autostart
+
 	fi
 
 	echo "Inserting autostart line..."
