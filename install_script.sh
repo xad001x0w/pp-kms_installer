@@ -91,7 +91,7 @@ Setautostart()
 	echo "Patching pp_manager.py to wait 30 seconds before starting..."
 	#edit pp_manager.py to wait 30 seconds for network to come up after starting (prevents failed launch)
 	#sed -i '/start(PPManager,address=self.ip.*/i \ \ \ \ \ \ \ \ sleep(30)' /home/pi/pipresents/pp_manager.py
-	sed -i 's/wait_for_network(10).*/wait_for_network(30)/' /home/pi/pipresents/pp_manager.py
+	sed -i 's/wait_for_network(10).*/wait_for_network(60)/' /home/pi/pipresents/pp_manager.py
 	echo "...done!"
 
 }
