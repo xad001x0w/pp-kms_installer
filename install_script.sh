@@ -90,7 +90,7 @@ Enablessh()
 	raspi-config nonint do_ssh 0
 }
 
-Enablevnc())
+Enablevnc()
 {
 	# Seems to be more whether vnc is DISABLED or not, 1 = disabled, 0 = enabled
 	raspi-config nonint do_vnc 0
