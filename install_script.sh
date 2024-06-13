@@ -90,7 +90,7 @@ Setautostart()
 
 	echo "Patching pp_manager.py to wait 10 seconds before starting..."
 	#edit pp_manager.py to wait 10 seconds for network to come up after starting (prevents failed launch)
-	sed -i '/*.start(PPManager,address=self.ip.*/i sleep(10)/' /home/pi/pipresents/pp_manager.py
+	sed -i '/start(PPManager,address=self.ip.*/i \ \ \ \ \ \ \ \ sleep(10)' /home/pi/pipresents/pp_manager.py
 	echo "...done!"
 
 }
@@ -102,7 +102,10 @@ Sethostname()
 	echo Enter new hostname:
 	read new_hostname
 	raspi-config nonint do_hostname $new_hostname
+	curhost=$(hostname)
+	printf "New hostname is: %s\n" "$curhost"
 	#edit pp_web.cfg to update hostname
+	sed -i "s/unit =.*/unit = $curhost/" /home/pipresents/pp_config/pp_web.cfg
 }
 
 Enablessh()
