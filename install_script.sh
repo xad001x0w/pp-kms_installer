@@ -77,10 +77,13 @@ Installexmp()
 
 Setautostart()
 {
-	if [ ! -f /home/pi/.config/lxsession/LXDE-pi/autostart ] then
+	if [ ! -f /home/pi/.config/lxsession/LXDE-pi/autostart ]; then
+		
     	echo "Copying default autostart file..."
     	cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/autostart
+	
 	fi
+
 	echo "Inserting autostart line..."
 	grep -qxF "/usr/bin/python3 /home/pi/pipresents" /home/pi/.config/lxsession/LXDE-pi/autostart || echo "/usr/bin/python3 /home/pi/pipresents" >> /home/pi/.config/lxsession/LXDE-pi/autostart
 	echo "...done!"
