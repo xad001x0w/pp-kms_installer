@@ -88,9 +88,9 @@ Setautostart()
 	echo "Inserting autostart line..."
 	grep -qxF "/usr/bin/python3 /home/pi/pipresents/pp_manager.py" /home/pi/.config/lxsession/LXDE-pi/autostart || echo "/usr/bin/python3 /home/pi/pipresents/pp_manager.py" >> /home/pi/.config/lxsession/LXDE-pi/autostart
 
-	echo "Patching pp_manager.py to wait 10 seconds before starting..."
-	#edit pp_manager.py to wait 10 seconds for network to come up after starting (prevents failed launch)
-	sed -i '/start(PPManager,address=self.ip.*/i \ \ \ \ \ \ \ \ sleep(10)' /home/pi/pipresents/pp_manager.py
+	echo "Patching pp_manager.py to wait 30 seconds before starting..."
+	#edit pp_manager.py to wait 30 seconds for network to come up after starting (prevents failed launch)
+	sed -i '/start(PPManager,address=self.ip.*/i \ \ \ \ \ \ \ \ sleep(30)' /home/pi/pipresents/pp_manager.py
 	echo "...done!"
 
 }
