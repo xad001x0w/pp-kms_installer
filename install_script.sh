@@ -105,7 +105,7 @@ Sethostname()
 	curhost=$(hostname)
 	printf "New hostname is: %s\n" "$curhost"
 	#edit pp_web.cfg to update hostname
-	sed -i "s/unit =.*/unit = $curhost/" /home/pipresents/pp_config/pp_web.cfg
+	sed -i "s/unit =.*/unit = $curhost/" /home/pi/pipresents/pp_config/pp_web.cfg
 }
 
 Enablessh()
