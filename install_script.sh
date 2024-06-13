@@ -96,6 +96,12 @@ Enablevnc()
 	raspi-config nonint do_vnc 0
 }
 
+Disableblank()
+{
+	# 1 = disabled, 0 = enabled
+	raspi-config nonint do_blanking 1
+}
+
 Installsmb()
 {
 	apt-get -y install samba samba-client
@@ -296,8 +302,13 @@ if [[ $doall = true ]]; then
 	echo "... Done!"
 else
 	echo
-	printf "Current SSH disablement status: "
-	raspi-config nonint get_ssh
+	status=$(raspi-config nonint get_ssh)
+	if [[ $status = "0" ]]; then
+		string=$"enabled!"
+	else
+		string=$"disabled!"
+	fi
+	printf "SSH access is currently %s\n" "$string"
 	read -p "Enable SSH access? (yes/no) " -n 1 -r
 	
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -322,10 +333,8 @@ else
 	echo
 	status=$(raspi-config nonint get_vnc)
 	if [[ $status = "0" ]]; then
-		echo $status
 		string=$"enabled!"
 	else
-		echo $status
 		string=$"disabled!"
 	fi
 	printf "VNC is currently %s\n" "$string"
@@ -339,6 +348,35 @@ else
 	else
 		echo
 		echo "Skipping enabling VNC access!"
+		echo
+	fi
+fi
+
+# Disable screen blanking (blanking = going blank after period of time)
+if [[ $doall = true ]]; then
+	echo
+	echo "Disabling screen blanking..."
+	Disableblank
+	echo "... Done!"
+else
+	echo
+	status=$(raspi-config nonint get_blanking)
+	if [[ $status = "0" ]]; then
+		string=$"enabled!"
+	else
+		string=$"disabled!"
+	fi
+	printf "Screen blanking is currently %s\n" "$string"
+	read -p "Disble screen blanking? (yes/no) " -n 1 -r
+	
+	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		echo
+		echo "Disabling screen blanking..."
+		Disableblank
+		echo "... Done!"
+	else
+		echo
+		echo "Skip diabling screen blanking!"
 		echo
 	fi
 fi
