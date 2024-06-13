@@ -63,7 +63,7 @@ Installpp()
 {
 	# Download and install Pi Presents
 	mkdir /home/pi/pipresents
-	wget -P /home/pi/ https://github.com/KenT2/pipresents-kms/tarball/master -O - | tar --overwrite -xz -C /home/pi/pipresents
+	wget -P /home/pi/ https://github.com/KenT2/pipresents-kms/tarball/master -O - | tar --overwrite -xz -C /home/pi/pipresents --strip-components=1
 	chown pi:pi -R /home/pi/pipresents
 }
 
